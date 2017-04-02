@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat IO</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+  </head>
+  <body>
+  <div id="invited" style="width:100px;height:50px;float:right">
+  </div>
+  <div id="messageleaveRoom">
+  </div>
+    <div class="container clearfix">
+      <div class="chat">
+        <div class="chat-header clearfix">
+          <img src="/img/user.jpg" alt="avatar">
+          <div class="chat-about">
+            <div class="chat-room"></div>
+            <div class="chat-num-users"><%=data.length%> User(s)</div>
+          </div>
+          <div id="divFind" style="float:right;margin:20px;">
+          </div>
+          <div style="float:right;margin:10px;margin-top:40px;margin-left:30px;" id="findMessage">
+          </div>
+        </div> <!-- end chat-header -->
+        <div class="chat-history">
+          <ul>
+            <%
+            for(var i=0;i<message.length;i++){
+              %>
+                        <li>
+                          <div class="message-data">
+                            <span class="message-data-name"><%=message[i].id_user%></span>
+                            <span class="message-data-time"><%=message[i].date%></span>
+                          </div>
+                          <% if(message[i].type=="text")
+                          {
+                            %>
+                            <div class="message my-message" dir="auto"><%=message[i].message%></div>
+                            <%
+                          }else if(message[i].type=="image/jpeg" || message[i].type=="image/jpg" || message[i].type=="image/png" ){
+                            %>
+                            <img style="width:300px;"src="<%=message[i].message%>" alt="">
+                            <%
+                          }else{
+                            %>
+                            <a style="color:red;" onclick="$(function(){app.myFunc('<%=message[i].message%>','<%=message[i].file_name%>','<%=message[i].type%>')})"><%=message[i].file_name%></a>
+                            <%
+                          }
+                          %>
+
+                        </li>
+                <%
+              }
+            %>
+          </ul>
+        </div> <!-- end chat-history -->
+
+        <div class="chat-message clearfix">
+          <textarea name="message" placeholder ="Type your message" rows="3"></textarea>
+          <button id="send" type="submit">Send</button>
+          <div id="input_container" style="width: 0px; height: 0px; overflow: hidden"><input type="file" id="fileSelector" /></div>
+          <button id="uploadImage" type="button" style="margin-right:10px;padding:10px 15px 10px 15px;" name="button"><i style="font-size:26px;" class="fa fa-paperclip" aria-hidden="true"></i></button>
+        </div> <!-- end chat-message -->
+      </div> <!-- end chat -->
+
+      <div class="controls">
+          <a href="/logout" class="logout-btn">Logout</a>
+          <a href="/chat" class="rooms-btn">Rooms</a>
+      </div>
+
+      <div class="users-list">
+        <ul class="list" id="listUser">
+          <%  for(var i=0;i<data.length;i++){
+                if(data[i].facebook) {
+                  var arr = data[i].facebook.split(";")
+                  %>
+                  <li class="clearfix" id="<%=data[i].id_user%>">
+                            <img src="<%=arr[3]%>" alt="<%=arr[1]%>" />
+                            <div class="about">
+                               <div class="name"><%=arr[1]%></div>
+                              <% if(data[i].role=="offline" || data[i].role=="AddminOffline"){
+                                %>
+                                <div class="status"><i class="fa fa-circle offline"></i><span> offline</span></div>
+                                <%
+                              }else{
+                                  %>
+                                  <div class="status"><i class="fa fa-circle online"></i> <span> online</span></div>
+                                  <%
+                                }
+                              %>
+                            </div></li>
+                   <%
+            }else if(data[i].google){
+                var arr = data[i].google.split(";")
+                %>
+                <li class="clearfix" id="<%=data[i].id_user%>">
+                          <img id="img" src="<%=arr[3]%>" alt="<%=arr[1]%>" />
+                          <div class="about">
+                             <div class="name"><%=arr[1]%></div>
+                             <% if(data[i].role=="offline" || data[i].role=="AddminOffline"){
+                               %>
+                               <div class="status"><i class="fa fa-circle offline"></i> <span> offline</span></div>
+                               <%
+                              }else{
+                                 %>
+                                 <div class="status"><i class="fa fa-circle online"></i> <span> online</span></div>
+                                 <%
+                               }
+                              %>
+                          </div></li>
+                 <%
+            }else{
+                %>
+                <li class="clearfix" id="<%=data[i].id_user%>">
+                          <img src="/img/user.jpg" alt="<%=data[i].id_user%>" />
+                          <div class="about">
+                             <div class="name"><%=data[i].id_user%></div>
+                             <% if(data[i].role=="offline" || data[i].role=="AddminOffline"){
+                               %>
+                               <div class="status"><i class="fa fa-circle offline"></i> offline</div>
+                               <%
+                              }else{
+                                 %>
+                                 <div class="status"><i class="fa fa-circle online"></i> online</div>
+                                 <%
+                               }
+                            %>
+                          </div></li>
+                 <%
+              }
+            }
+          %>
+        </ul>
+      </div>
+    </div> <!-- end container -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/lib/download.js"></script>
+    <script src="/js/rooms.js"></script>
+    <script>$(function(){app.chat(<%=id%>,<%=user.id%>)});</script>
+  </body>
+</html>
