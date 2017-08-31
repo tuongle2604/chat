@@ -2,11 +2,6 @@ var dbconfig = require('../config/database')
 var qb = require('node-querybuilder').QueryBuilder(dbconfig, 'mysql', 'single');
 var room= require('./models/room')
 var fs      = require("fs");
-var gm = require('gm').subClass({imageMagick: true});
-var Jimp = require("jimp");
-var filesize = require("filesize");
-// var sharedsession = require("express-socket.io-session");
-// var session  = require('express-session');
 module.exports =function(io,app){
 //   io.of('/chat').use(sharedsession(session, {
 //     autoSave: true
