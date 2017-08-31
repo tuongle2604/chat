@@ -1,2 +1,2 @@
 # chat
-test
+thiếu csdl
