@@ -96,7 +96,7 @@ passport.use(
   passport.use(new FacebookStrategy({
           clientID        : '377155859334760',
           clientSecret    : '83f3b29647f9a053cd315dbdf0cf279b',
-          callbackURL     : 'http://localhost:1337/auth/facebook/callback',
+          callbackURL     : 'http://localhost:3000/auth/facebook/callback',
           profileFields: ['id', 'displayName', 'link',  'photos', 'email'],
           enableProof: true
       },
@@ -166,7 +166,7 @@ passport.use(
      passport.use(new GoogleStrategy({
                     clientID        : '359603809187-021gqicvhol3vqdd1h8vhsc6v69lqs99.apps.googleusercontent.com',
                     clientSecret    : 'FKns_naE2-Gjsz5yUdpwdvNJ',
-                    callbackURL     : 'http://localhost:1337/auth/google/callback',
+                    callbackURL     : 'http://localhost:3000/auth/google/callback',
                 },function(token, refreshToken, profile, done) {
              process.nextTick(function() {
                   var email = profile.emails[0].value;
