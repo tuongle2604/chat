@@ -1,2 +1,1 @@
 # chat
-thiếu csdl
