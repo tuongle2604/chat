@@ -43,12 +43,12 @@ var app = {
         })
 
         socket.on('moveToRoom',function(data){
-          var redirect = "http://localhost:1337/chat/"+data.data.id_room;
+          var redirect = "http://localhost:3000/chat/"+data.data.id_room;
           window.location.href = redirect;
         })
 
         socket.on('getInvited',function(room,inviteMessage){
-          var redirect = "http://localhost:1337/chat/"+room;
+          var redirect = "http://localhost:3000/chat/"+room;
           $("#invited").append(`<div id="div1"><p>ai do da moi ban vao nhom</p>
           <p>${inviteMessage}</p>
           <button   onclick="window.location.href='${redirect}'">yes</button>
@@ -240,7 +240,7 @@ var id_file=0;
         })
           socket.on('updateUserList',function(data){
             if(data.error){
-              window.location.href = "http://localhost:1337/chat";
+              window.location.href = "http://localhost:3000/chat";
             $('.room-create').append(`<p class="message error">${data.error}</p>`);
             }else{
               if(data.data.facebook){
@@ -302,14 +302,13 @@ var id_file=0;
             }
           })
           $("#send").on('click', function() {
-            console.log(123);
               var textareaEle = $("textarea[name='message']");
               var messageContent = textareaEle.val().trim();
               if(messageContent !== '') {
                 var message1 = {
                   type:'text',
                   content: messageContent,
-                  date: Date.now(),
+                  date: new Date(),
                   room:id_room,
                   id:id_user,
                 };
@@ -340,7 +339,7 @@ var id_file=0;
                     var message1 = {
                       name:name,
                       content: message,
-                      date: Date.now(),
+                      date: new Date(),
                       room:id_room,
                       id:id_user,
                     };
@@ -410,9 +409,10 @@ var id_file=0;
                 var id1="inviteButton";
                 var id2="findInput";
                 var id3="inviteMessage";
-                $('#divFind').append(`<button id="${id1}" onclick="" style="height:25px;margin:5px;">invite</button>
-                  <input type="text"  id="${id2}" style="height:25px;margin:5px;"></br>
-                   text:<input type="text" id="${id3}" style="height:25px;margin:5px;margin-left:35px;">`);
+                $('#divFind').append(`
+                  <button id="${id1}" onclick="" style="height:25px;">invite</button>
+                  <input placeholder="nhap id user" type="text"  id="${id2}" style="height:25px;margin:5px;padding-left:10px;"></br>
+                   text:<input type="text" id="${id3}" style="height:25px;margin:5px;margin-left:27px;">`);
 
                    $("#inviteButton").on("click", function() {
                      var id_find = $("#findInput").val();

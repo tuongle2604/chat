@@ -3,14 +3,7 @@ var qb = require('node-querybuilder').QueryBuilder(dbconfig, 'mysql', 'single');
 var room= require('./models/room')
 var fs      = require("fs");
 module.exports =function(io,app){
-//   io.of('/chat').use(sharedsession(session, {
-//     autoSave: true
-//
-// }));
-// io.of('/chatroom').use(sharedsession(session, {
-//   autoSave: true
-//
-// }));
+
    io.of('/chat').on('connection', function(socket) {
      socket.on('con',function(id_user){
        socket.user_ID=id_user;
@@ -115,7 +108,7 @@ module.exports =function(io,app){
        var name = message1.name
        var id_user = message1.id;
        var message = message1.content;
-       var date = message1.date;
+       var date = message1.date.toLocaleString();
        var id_room = message1.room;
        if(message1.type){
          var type = message1.type;

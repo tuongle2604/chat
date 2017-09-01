@@ -103,10 +103,10 @@ var insertUser = function(role,id_room,id_user,cb){
 var updateLeaveRoom =function(id_room,id_user,cb){
   findUser(id_room,id_user,function(dl){
     if(dl==1){
-      console.log('loi updateLeaveRoom')
       console.log(err);
       cb(1);
     }else{
+      console.log(dl)
       if(dl.role=="admin"){
         var data={
             id_room:id_room,
@@ -115,7 +115,6 @@ var updateLeaveRoom =function(id_room,id_user,cb){
         }
         qb.update('roomdetail', data, {id_user:id_user,id_room:id_room}, function(err, res) {
                   if (err){
-                    console.log('loi updateLeaveRoom')
                     console.log(err);
                     cb(1);
                   }else{
@@ -131,7 +130,6 @@ var updateLeaveRoom =function(id_room,id_user,cb){
         }
         qb.update('roomdetail', data, {id_user:id_user,id_room:id_room}, function(err, res) {
                   if (err){
-                    console.log('loi updateLeaveRoom')
                     console.log(err);
                     cb(1);
                   }else{
@@ -152,7 +150,6 @@ var updateJoinRoom =function(role,id_room,id_user,cb){
   }
   qb.update('roomdetail', data, {id_user:id_user,id_room:id_room}, function(err, res) {
             if (err){
-              console.log('loi updateJoinRoom')
               console.log(err);
               cb(1);
             }else{
@@ -163,10 +160,8 @@ var updateJoinRoom =function(role,id_room,id_user,cb){
 
 }
 var insertMessage = function(id_room,id_user,message,date,type,name,cb){
-  var date = (new Date(date)).toLocaleString();
-  console.log(name)
+  var date = new Date(date).toLocaleString();
   if(name){
-    console.log(1);
     var data ={
       id_room:id_room,
       id_user:id_user,
@@ -176,7 +171,6 @@ var insertMessage = function(id_room,id_user,message,date,type,name,cb){
       file_name:name,
     }
   }else{
-    console.log(2);
     var data ={
       id_room:id_room,
       id_user:id_user,
@@ -214,7 +208,6 @@ var findRoomWithUserId = function(id_user,cb){
   qb.select('id_room')
   .where('id_user',id_user)
   .get('roomdetail',function(err,response){
-    console.log(1);
     if(err){
       console.log(2);
       console.log(err)

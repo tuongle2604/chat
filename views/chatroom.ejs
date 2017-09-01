@@ -28,11 +28,13 @@
           <ul>
             <%
             for(var i=0;i<message.length;i++){
+              var date = message[i].date.toLocaleString();
+
               %>
                         <li>
                           <div class="message-data">
                             <span class="message-data-name"><%=message[i].id_user%></span>
-                            <span class="message-data-time"><%=message[i].date%></span>
+                            <span class="message-data-time"><%=date%></span>
                           </div>
                           <% if(message[i].type=="text")
                           {

@@ -22,23 +22,18 @@ module.exports = function(app,passport){
 			 failureRedirect:'/dangnhap',
 			 failureFlash: true}),
 	  function(req, res) {
-			console.log("zZZZz")
-			if (req.body.remember) {
-				console.log("remember");
-				req.session.cookie.maxAge =  60 * 1000;
-			} else {
-				console.log("not remember");
-				delete req.session.cookie.expires;
-				delete req.session.cookie.maxAge;
-				req.session.cookie.expires = new Date(0);
-				req.session.cookie.maxAge = 0;
-				console.log(req.session.cookie.expires);
-				req.session.cookie.expires = false;
-			}
 	    res.redirect('/chat');
 	  });
 
-		app.get('/chat',isLoggedIn,function(req,res){
+		app.use('/chat',function(req,res,next){
+			if (req.isAuthenticated()){
+				return next();
+			}else{
+				res.redirect('/dangnhap');
+			}
+		})
+
+		app.get('/chat',function(req,res){
 			room.findListRoom(function(data){
 				if(data==1){
 					res.redirect('dangnhap');
@@ -48,7 +43,7 @@ module.exports = function(app,passport){
 			})
 
 		})
-		app.get('/chat/:id',isLoggedIn,function(req,res){
+		app.get('/chat/:id',function(req,res){
 			var id =req.params.id;
 			room.findListUser(id,function(data){
 				room.findListMessage(id,function(message){
@@ -86,24 +81,6 @@ function isLogin(req,res,next){
 		return next();
 	}
 }
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()){
-		if (req.body.remember) {
-			console.log(1);
-			req.session.cookie.maxAge =   60 * 1000;
-		} else {
-			console.log(2);
-			delete req.session.cookie.expires;
-			delete req.session.cookie.maxAge;
-			req.session.cookie.expires = new Date(0);
-			req.session.cookie.maxAge = 0;
-			console.log(req.session.cookie.expires);
-			req.session.cookie.expires = false;
-		}
-		return next();
-	}else{
-		res.redirect('/dangnhap');
-	}
-}
+
 
 // module.exports = router;

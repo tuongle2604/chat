@@ -1,11 +1,7 @@
 var Crypto = require("crypto-js");
-var qb = require('node-querybuilder').QueryBuilder({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'mytest',
-    pool_size: 50
-},'mysql','single');
+var dbconfig = require('../../config/database')
+var qb = require('node-querybuilder').QueryBuilder(dbconfig, 'mysql', 'single');
+
 var SECRET_KEY ="adfgpoiufkjhgfmbvcx";
 
 var insert = function(data,cb){
@@ -36,7 +32,10 @@ var decode = function(password){
 }
 
 var checkEmailFB = function(email,cb){
-  qb.select('*').get('users',function(err,response){
+  const stars = [null, 'Null'];
+  qb.select('*')
+  .where_not_in('facebook',stars)
+  .get('users',function(err,response){
     if(err){
       cb(1);
     }else{
@@ -74,7 +73,11 @@ var checkId = function(id,cb){
 }
 
 var checkEmailGoogle = function(email,cb){
-  qb.select('*').get('users',function(err,response){
+  const stars = [null, 'Null'];
+
+  qb.select('*')
+  .where_not_in('google',stars)
+  .get('users',function(err,response){
     if(err){
       cb(1);
     }else{

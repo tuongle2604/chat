@@ -1,4 +1,4 @@
-var dbconfig = require('../config/database')
+var dbconfig = require('./database')
 var qb = require('node-querybuilder').QueryBuilder(dbconfig, 'mysql', 'single');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;

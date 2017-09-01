@@ -13,10 +13,12 @@ var server  = require('http').createServer(app);
 var io      = require('socket.io').listen(server);
 
 require('./app/socket')(io,app);
+
 require('./config/passport')(passport);
 
-app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
+
+app.use(morgan('dev'));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));

@@ -1,7 +1,7 @@
-module.exports ={
+module.exports = {
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'mytest',
+  database: 'chat',
   pool_size: 50
 }
