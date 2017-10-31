@@ -35,7 +35,9 @@ app.use(session({cookie: { maxAge: 60 * 1000 }}));
  // routes
 
 require('./app/routes.js')(app, passport);
-
+app.get("*",function(req,res){
+  res.redirect('/dangnhap')
+})
 
 server.listen(port);
  // app.listen(port);

@@ -95,7 +95,7 @@ passport.use(
 
   passport.use(new FacebookStrategy({
           clientID        : '377155859334760',
-          clientSecret    : '83f3b29647f9a053cd315dbdf0cf279b',
+          clientSecret    : '4ca3afdd874a7de702b447071c27ce6e',
           callbackURL     : 'http://localhost:3000/auth/facebook/callback',
           profileFields: ['id', 'displayName', 'link',  'photos', 'email'],
           enableProof: true
